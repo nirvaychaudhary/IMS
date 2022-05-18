@@ -27,6 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -42,6 +43,7 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
 ]
 CUSTOM_APPS = [
+    'authentication',
     'accounts',
     'attendence',
     'tasks',
@@ -49,8 +51,13 @@ CUSTOM_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-   'rest_framework',
-   'rest_framework.authtoken',
+    'rest_framework',
+    'corsheaders',
+    'djoser',
+    'rest_framework_swagger',
+    'rest_framework.authtoken',
+    'django_filters',
+    'django_rest_passwordreset',
    
 ]
 
@@ -80,13 +87,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {  
+                'staticfiles': 'django.templatetags.static',
+                },
         },
     },
 ]
 
 WSGI_APPLICATION = 'IMS.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = "authentication.CustomUser"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

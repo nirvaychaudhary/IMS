@@ -6,11 +6,11 @@ class AttendenceSerializer(ModelSerializer):
         model = Attendence
         fields = '__all__'
         
-    def create(self, validated_data):
-        attendance = Attendence.objects.create(
-            status=validated_data['status'],
-            # user=validated_data['user']
-        )
-
-        attendance.save() 
-        return attendance
+    # def create(self, validated_data):
+    #     attendance = Attendence.objects.create(
+    #         status=validated_data['status'],
+    #         # user=validated_data['user']
+    #     )
+    #     attendance.user = self.request.
+    #     attendance.save() 
+    #     return attendance

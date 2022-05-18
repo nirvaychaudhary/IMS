@@ -2,24 +2,12 @@ import imp
 from django.shortcuts import render
 from .models import *
 from .serializers import *
-from accounts.models import CustomUser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from IMS.pagination import StandardPagination
-from django.contrib.contenttypes.models import ContentType
-# from guardian.models import GroupObjectPermission
-from itertools import chain
-from operator import attrgetter
 from django.db.models.base import ModelBase
 from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth.models import Group
-from rest_framework.generics import (
-    RetrieveAPIView,
-    CreateAPIView,
-   
-)
 # Create your views here.
 
 def list_to_queryset(model, data):
@@ -39,8 +27,8 @@ def list_to_queryset(model, data):
 class AttendenceViewset(ModelViewSet):
     # queryset = Attendence.objects.all()
     serializer_class = AttendenceSerializer
-    # authentication_classes = (TokenAuthentication, SessionAuthentication)
-    # http_method_names = ['post']
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    pagination_class = (StandardPagination)
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -48,8 +36,11 @@ class AttendenceViewset(ModelViewSet):
         else:
             return Attendence.objects.filter(user = self.request.user)
 
-    def perform_update(self, serializer):
-        return serializer.save()
+    # def perform_update(self, serializer):
+    #     return serializer.save()
+
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
 
 
     def update(self, request, *args, **kwargs):

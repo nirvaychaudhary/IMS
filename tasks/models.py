@@ -1,7 +1,7 @@
 from pyexpat import model
 from unicodedata import category
 from django.db import models
-from accounts.models import CustomUser
+from authentication.models import CustomUser
 
 
 class Task(models.Model):
@@ -14,8 +14,6 @@ class Task(models.Model):
         return self.title
 
 
-
-
 class AssignTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE,null = True, blank=True)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null = True, blank=True)
@@ -23,4 +21,11 @@ class AssignTask(models.Model):
     finish_date = models.DateTimeField(null = True, blank = True)
     
     def ___str__(self):
-        return self.task__title
+        return self.user
+
+class MarkTask(models.Model):
+    task = models.ForeignKey(AssignTask, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+    
+    def ___str__(self):
+        return self.status
